@@ -1,103 +1,78 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
+//This is an example code for Bottom Navigation//
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
-
-const App: () => React$Node = () => {
-
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>The Mindset Journal</Text>
-              <Text style={styles.sectionDescription}>
-                Tap <Text style={styles.highlight}>Record</Text> or 
-                <Text style={styles.highlight}>Text</Text> to create your first journal entry.
-              </Text>
-            </View>
-          </View>
-
-           <View style={{padding: 10}}>
-            <TextInput
-              style={{height: 40}}
-              placeholder="Type here to translate!"
-              // onChangeText={(text) => this.setState({text})}
-              // value={this.state.text}
-            />
-          </View>
-
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+import { Button, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+//import all the basic component we have used
+import Ionicons from 'react-native-vector-icons/Ionicons';
+//import Ionicons to show the icon for bottom options
+ 
+import {createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {createStackNavigator} from 'react-navigation-stack';
+ 
+import HomeScreen from './pages/HomeScreen';
+import SettingsScreen from './pages/SettingsScreen';
+import DetailsScreen from './pages/DetailsScreen';
+import ProfileScreen from './pages/ProfileScreen';
+const HomeStack = createStackNavigator(
+  {
+    //Defination of Navigaton from home screen
+    Home: { screen: HomeScreen },
+    Details: { screen: DetailsScreen },
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  {
+    defaultNavigationOptions: {
+      //Header customization of the perticular Screen
+      headerStyle: {
+        backgroundColor: '#42f44b',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Home',
+      //Header title
+    },
+  }
+);
+const SettingsStack = createStackNavigator(
+  {
+    //Defination of Navigaton from setting screen
+    Settings: { screen: SettingsScreen },
+    Details: { screen: DetailsScreen },
+    Profile: { screen: ProfileScreen },
   },
-  body: {
-    backgroundColor: Colors.white,
+  {
+    defaultNavigationOptions: {
+      //Header customization of the perticular Screen
+      headerStyle: {
+        backgroundColor: '#42f44b',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Settings',
+      //Header title
+    },
+  }
+);
+const App = createBottomTabNavigator(
+  {
+    Home: { screen: HomeStack },
+    Settings: { screen: SettingsStack },
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
-
-export default App;
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Settings') {
+          iconName = `ios-checkmark-circle${focused ? '' : '-outline'}`;
+        }
+        return <IconComponent name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: '#42f44b',
+      inactiveTintColor: 'gray',
+    },
+  }
+);
+export default createAppContainer(App);
