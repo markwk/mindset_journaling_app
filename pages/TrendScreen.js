@@ -9,26 +9,8 @@ export default class TrendScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ marginTop: 50, fontSize: 25 }}>Setting!</Text>
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.props.navigation.navigate('Home')}>
-            <Text>Go to Home Tab</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.props.navigation.navigate('Details')}>
-            <Text>Open Detail Screen</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.props.navigation.navigate('Profile')}>
-            <Text>Open Profile Screen</Text>
-          </TouchableOpacity>
+        <Text style={{ marginTop: 50, fontSize: 25 }}>Coming Soon!</Text>
         </View>
-      </View>
     );
   }
 }

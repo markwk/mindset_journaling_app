@@ -27,7 +27,7 @@ const HomeStack = createStackNavigator(
     defaultNavigationOptions: {
       //Header customization of the perticular Screen
       headerStyle: {
-        backgroundColor: '#42f44b',
+        backgroundColor: '#13103F',
       },
       headerTintColor: '#FFFFFF',
       title: 'Home',
@@ -46,7 +46,7 @@ const SettingsStack = createStackNavigator(
     defaultNavigationOptions: {
       //Header customization of the perticular Screen
       headerStyle: {
-        backgroundColor: '#42f44b',
+        backgroundColor: '#13103F',
       },
       headerTintColor: '#FFFFFF',
       title: 'Settings',
@@ -63,10 +63,10 @@ const TrendssStack = createStackNavigator(
     defaultNavigationOptions: {
       //Header customization of the perticular Screen
       headerStyle: {
-        backgroundColor: '#42f44b',
+        backgroundColor: '#13103F',
       },
       headerTintColor: '#FFFFFF',
-      title: 'Settings',
+      title: 'Trends',
       //Header title
     },
   }
@@ -96,7 +96,7 @@ const App = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#42f44b',
+      activeTintColor: '#13103F',
       inactiveTintColor: 'gray',
     },
   }

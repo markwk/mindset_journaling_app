@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import Voice from 'react-native-voice';
 
+console.disableYellowBox = true;
+
 export default class RecordScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -115,32 +117,37 @@ render () {
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
       <Text style={{ marginTop: 50, fontSize: 25 }}>My Journal, My Mirror</Text>
-        <Button style={styles.transcript}
-        onPress={this._startRecognition.bind(this)}
-        title="Start">
-        </Button>
-        <Button 
-          style={styles.transcript}
-          onPress={this._stopRecognition.bind(this)}
-          title="Stop">
-        </Button>
-        <Text style={styles.transcript}>
-            Journal Text
-        </Text>
         {this.state.results.map((result, index) => <Text style={styles.transcript}> {result}
         </Text>
         )}
-        <Button 
-          style={styles.transcript}
-          onPress={this._saveEntry.bind(this)}
-          title="Save">
-        </Button>
         <View>
-        <Text>Analysis Results:</Text>
+        <View style={{ flex: 1, alignItems: 'center', marginTop: 150}}>
+        <TouchableOpacity style={styles.button}
+        onPress={this._startRecognition.bind(this)}
+        >
+        <Text>Record</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={this._stopRecognition.bind(this)}
+          >
+        <Text>Stop</Text>  
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={this._saveEntry.bind(this)}
+          >
+        <Text>Save</Text>  
+        </TouchableOpacity>
+        <Text style={{marginTop: 15, fontSize: 20}}>Growth Mindset Analysis{'\u00A9'}:</Text>
+        <Text style={{fontSize: 25, color: '#13103F'}}>
         {this.state.joy > 0.5? <Text>So happy!</Text>: null }
         {this.state.anger > 0.4? <Text>So angry!</Text>: null }
         {this.state.fear > 0.3? <Text>So fearful!</Text>: null }
+        {this.state.sadness > 0.3? <Text>So sad!</Text>: null }
+        </Text>
         </View>
+      </View>
       </View>
     );
   }
@@ -149,14 +156,20 @@ render () {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 30,
-    width: 300,
+    backgroundColor: '#71D1CD',
+    padding: 10,
+    width: 350,
     marginTop: 16,
   },
+  image: {
+    flex: 1,
+    resizeMode: 'contain'
+},
   transcript: {
     textAlign: 'center',
-    color: '#B0171F',
-    marginBottom: 1
+    padding: 10,
+    fontSize: 20,
+    marginBottom: 1,
+    marginTop: 25,
   },
 });
