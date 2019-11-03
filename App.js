@@ -13,11 +13,15 @@ import HomeScreen from './pages/HomeScreen';
 import SettingsScreen from './pages/SettingsScreen';
 import DetailsScreen from './pages/DetailsScreen';
 import ProfileScreen from './pages/ProfileScreen';
+import RecordScreen from './pages/RecordScreen';
+import TrendScreen from './pages/TrendScreen';
+
 const HomeStack = createStackNavigator(
   {
     //Defination of Navigaton from home screen
     Home: { screen: HomeScreen },
-    Details: { screen: DetailsScreen },
+    // Record: { screen: RecordScreen },
+    // Details: { screen: DetailsScreen },
   },
   {
     defaultNavigationOptions: {
@@ -50,10 +54,28 @@ const SettingsStack = createStackNavigator(
     },
   }
 );
+const TrendssStack = createStackNavigator(
+  {
+    //Defination of Navigaton from setting screen
+    Trends: { screen: TrendScreen },
+  },
+  {
+    defaultNavigationOptions: {
+      //Header customization of the perticular Screen
+      headerStyle: {
+        backgroundColor: '#42f44b',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Settings',
+      //Header title
+    },
+  }
+);
 const App = createBottomTabNavigator(
   {
     Home: { screen: HomeStack },
-    Settings: { screen: SettingsStack },
+    Record: { screen: RecordScreen },
+    Trends: { screen: TrendssStack },
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -62,9 +84,13 @@ const App = createBottomTabNavigator(
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          iconName = `ios-home`;
+        } else if (routeName === 'Record') {
+          iconName = `ios-mic`;
         } else if (routeName === 'Settings') {
           iconName = `ios-checkmark-circle${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Trends') {
+          iconName = `ios-stats`;
         }
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
