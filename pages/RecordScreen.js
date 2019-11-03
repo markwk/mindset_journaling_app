@@ -74,8 +74,9 @@ async _saveEntry(e) {
     // Happy Example
     // data.append("text", "On a holiday, I was sitting in my room after finishing my homework. As my friends were away to hill stations, I was feeling very lonely. I watched the cars and other vehicles passing by and wished that like my friends, I would also have been travelling or passing my time. While my mind was occupied with thoughts of holiday and having fun with my friends, the doorbell rang. I ran to answer it and found the postman with a parcel and a letter for me. I signed the paper and took the parcel. My hands were itching to open the packet out of intense curiosity. I ripped the parcel open and found a beautiful tape recorder in it. The parcel has been sent from the U.S. and the letter along with it was from my uncle who had sent me a wonderful gift.");
     // angry
-    // data.append("text", "The kind of blasphemy you people run really makes me sick, I mean really sick. For instance in your February 28 issue, right on page 14, your interviewer asks Lily Tomlin, Who's the funniest person you ever met? and she answers right away, without batting an eye, Oh, God. Well I don't believe Lily Tomlin ever met God. And I don't believe God is funny. You're sick, that's all I can say. Really really sick.")
-    //data.append("text", this.state.resultsthis.state.results);
+    //data.append("text", "The kind of blasphemy you people run really makes me sick, I mean really sick. For instance in your February 28 issue, right on page 14, your interviewer asks Lily Tomlin, Who's the funniest person you ever met? and she answers right away, without batting an eye, Oh, God. Well I don't believe Lily Tomlin ever met God. And I don't believe God is funny. You're sick, that's all I can say. Really really sick.")
+    data.append("text", (this.state.results).toString());
+    console.log(data);
     fetch(
       'https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2019-07-12&features=emotion',{
       method: 'POST',
@@ -92,6 +93,7 @@ async _saveEntry(e) {
     })
     .then(responseJson => {
       let emotions = responseJson.emotion.document.emotion
+      console.log(emotions);
       this.setState({
         joy: emotions.joy,
         disgust: emotions.disgust,
@@ -112,7 +114,7 @@ async _saveEntry(e) {
 render () {
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
-      <Text style={{ marginTop: 50, fontSize: 25 }}>The Mindset Journal!</Text>
+      <Text style={{ marginTop: 50, fontSize: 25 }}>My Journal, My Mirror</Text>
         <Button style={styles.transcript}
         onPress={this._startRecognition.bind(this)}
         title="Start">
