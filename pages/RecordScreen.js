@@ -8,6 +8,11 @@ import {
 } from 'react-native';
 import Voice from 'react-native-voice';
 
+
+// var features = JSON.stringfy('./watson-features.js');
+// var features = require('./watson-features.js');
+// console.log(features);
+
 export default class RecordScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -59,6 +64,39 @@ async _stopRecognition(e) {
   }
 async _saveEntry(e) {
     console.log(this.state.results)
+    const data = new FormData();
+    // data.append("text", "Australian Prime Minister Gillard lets loose on the leader of the opposition for his blatant and long practiced mysoginy. What I love about this rant is that it’s clearly not scripted. She had some points set out to make and then just let loose.");
+    data.append("text", this.state.resultsthis.state.results);
+    fetch(
+      'https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2019-07-12&features=emotion',{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Basic YXBpa2V5Ok1CdEVzQ011Z2R6M1pIMDJaX1hwR3ZhZzJsVG5RWEwyMkZvWlpLRWc4S2Jl',
+        // apikey:gjgAfvwP7ykuNvgIqcKvHdCTrEzmKi0sh5MRxvY2hvjj
+      },
+      body: data,
+      //body: JSON.stringify({
+      //  text: "Life is so difficult. I can't seem to change anything.",
+      //  features: 'emotion',
+      //}),
+    }).then(response => {
+      // console.log(response.text());
+      return response.json()
+    })
+    .then(responseJson => {
+      // console.log(responseJson);
+      console.log(responseJson.emotion);
+      let negativeEmotion: boolean;
+
+      // console.log(responseJson.images[0]);
+      // console.log(responseJson.images[0].objects);
+    })
+    .catch(error => {
+      console.log("Got error");
+      console.error(error);
+    });
   }
 render () {
     return (
