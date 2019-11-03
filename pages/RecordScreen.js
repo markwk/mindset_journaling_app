@@ -8,11 +8,6 @@ import {
 } from 'react-native';
 import Voice from 'react-native-voice';
 
-
-// var features = JSON.stringfy('./watson-features.js');
-// var features = require('./watson-features.js');
-// console.log(features);
-
 export default class RecordScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +15,13 @@ export default class RecordScreen extends React.Component {
       recognized: '',
       started: '',
       results: [],
+      emotions: [],
+      emotional_detection: '',
+      joy: null,
+      disgust: null,
+      fear: null,
+      sadness: null,
+      anger: null
     };
     Voice.onSpeechStart = this.onSpeechStart.bind(this);
     Voice.onSpeechRecognized = this.onSpeechRecognized.bind(this);
@@ -56,6 +58,9 @@ async _startRecognition(e) {
     }
   }
 async _stopRecognition(e) {
+    this.setState({
+      emotional_detection: 'Unkown',
+    });
     try {
       await Voice.stop();
     } catch (e) {
@@ -66,7 +71,11 @@ async _saveEntry(e) {
     console.log(this.state.results)
     const data = new FormData();
     // data.append("text", "Australian Prime Minister Gillard lets loose on the leader of the opposition for his blatant and long practiced mysoginy. What I love about this rant is that it’s clearly not scripted. She had some points set out to make and then just let loose.");
-    data.append("text", this.state.resultsthis.state.results);
+    // Happy Example
+    // data.append("text", "On a holiday, I was sitting in my room after finishing my homework. As my friends were away to hill stations, I was feeling very lonely. I watched the cars and other vehicles passing by and wished that like my friends, I would also have been travelling or passing my time. While my mind was occupied with thoughts of holiday and having fun with my friends, the doorbell rang. I ran to answer it and found the postman with a parcel and a letter for me. I signed the paper and took the parcel. My hands were itching to open the packet out of intense curiosity. I ripped the parcel open and found a beautiful tape recorder in it. The parcel has been sent from the U.S. and the letter along with it was from my uncle who had sent me a wonderful gift.");
+    // angry
+    // data.append("text", "The kind of blasphemy you people run really makes me sick, I mean really sick. For instance in your February 28 issue, right on page 14, your interviewer asks Lily Tomlin, Who's the funniest person you ever met? and she answers right away, without batting an eye, Oh, God. Well I don't believe Lily Tomlin ever met God. And I don't believe God is funny. You're sick, that's all I can say. Really really sick.")
+    //data.append("text", this.state.resultsthis.state.results);
     fetch(
       'https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2019-07-12&features=emotion',{
       method: 'POST',
@@ -77,21 +86,23 @@ async _saveEntry(e) {
         // apikey:gjgAfvwP7ykuNvgIqcKvHdCTrEzmKi0sh5MRxvY2hvjj
       },
       body: data,
-      //body: JSON.stringify({
-      //  text: "Life is so difficult. I can't seem to change anything.",
-      //  features: 'emotion',
-      //}),
     }).then(response => {
       // console.log(response.text());
       return response.json()
     })
     .then(responseJson => {
+      let emotions = responseJson.emotion.document.emotion
+      this.setState({
+        joy: emotions.joy,
+        disgust: emotions.disgust,
+        fear: emotions.fear,
+        sadness: emotions.sadness,
+        anger: emotions.anger
+      });
       // console.log(responseJson);
-      console.log(responseJson.emotion);
-      let negativeEmotion: boolean;
-
-      // console.log(responseJson.images[0]);
-      // console.log(responseJson.images[0].objects);
+      // console.log(responseJson.emotion);
+      // console.log(responseJson.emotion.document.emotion.anger); // disgust, joy, fear, joy, sadness
+     // let emotions = responseJson.emotion.document.emotion //.anger;
     })
     .catch(error => {
       console.log("Got error");
@@ -114,13 +125,20 @@ render () {
         <Text style={styles.transcript}>
             Journal Text
         </Text>
-        {this.state.results.map((result, index) => <Text style={styles.transcript}> {result}</Text>
+        {this.state.results.map((result, index) => <Text style={styles.transcript}> {result}
+        </Text>
         )}
         <Button 
           style={styles.transcript}
           onPress={this._saveEntry.bind(this)}
           title="Save">
         </Button>
+        <View>
+        <Text>Analysis Results:</Text>
+        {this.state.joy > 0.5? <Text>So happy!</Text>: null }
+        {this.state.anger > 0.4? <Text>So angry!</Text>: null }
+        {this.state.fear > 0.3? <Text>So fearful!</Text>: null }
+        </View>
       </View>
     );
   }
