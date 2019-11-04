@@ -31,7 +31,7 @@ Mirror is a smart journaling tool that provides:
 
 ### From Assesment to Personalized Journaling 
 
-![](/Users/markkoester/Library/Mobile Documents/com~apple~CloudDocs/images-for-notes/2019/app-user-journey.png)
+![](https://raw.githubusercontent.com/markwk/mindset_journaling_app/master/slides/app-user-journey.png)
 
 Our product vision starts with a lightly modified version of the growth mindset questionnaire, the gold standard for identifying and classifying which mindset one fits into. After that, we let users use open input journaling of their choicing or to following guided journaling protocols that are automatically tracked and scored. Over time you get not only a journal for mental health but a tool for self-reflection and personal memories over time.  
 
