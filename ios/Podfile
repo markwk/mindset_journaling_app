@@ -38,20 +38,7 @@ target 'mindset_app' do
 
   pod 'react-native-voice', :path => '../node_modules/react-native-voice'
 
-  target 'mindset_appTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
   use_native_modules!
-end
-
-target 'mindset_app-tvOS' do
-  # Pods for mindset_app-tvOS
-
-  target 'mindset_app-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end
