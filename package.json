@@ -13,7 +13,7 @@
     "babel-preset-react-native": "2.1.0",
     "native-base": "^2.13.8",
     "react": "16.9.0",
-    "react-native": "0.61.3",
+    "react-native": "0.62.3",
     "react-native-audio-recorder-player": "^2.4.4-rc.1",
     "react-native-gesture-handler": "^1.5.0",
     "react-native-ionicons": "^4.6.3",
