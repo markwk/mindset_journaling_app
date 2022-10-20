@@ -17,7 +17,7 @@
     "react-native-audio-recorder-player": "^2.4.4-rc.1",
     "react-native-gesture-handler": "^1.5.0",
     "react-native-ionicons": "^4.6.3",
-    "react-native-reanimated": "^1.4.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-svg": "^9.13.6",
     "react-native-timeline-flatlist": "^0.5.0",
